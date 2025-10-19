@@ -25,7 +25,7 @@ When the database is initialized (`DbInitializer`), two default users are create
 - **Database:** MySQL  
 - **ORM / Data Access:** Entity Framework Core + Dapper  
 - **Frontend:** Razor Pages + Tailwind CSS  
-- **Backend:** ASP.NET Core (.NET 8 / .NET 9 compatible)
+- **Backend:** ASP.NET Core (.NET 8 )
 
 ---
 ## Overview
