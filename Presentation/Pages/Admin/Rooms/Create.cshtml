@@ -1,0 +1,34 @@
+@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Додати Номер";
+}
+
+<div class="container mx-auto p-4 sm:p-6 lg:p-8 min-h-screen">
+    <a asp-page="Index" asp-route-hotelId="@Model.HotelId" class="text-pink-600 hover:text-pink-800 flex items-center mb-6">
+        &larr; Назад до номерів готелю @Model.HotelName
+    </a>
+
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Додати Номер до Готелю: @Model.HotelName</h1>
+
+    <form method="post">
+        <input type="hidden" asp-for="HotelId" />
+        
+        <div asp-validation-summary="ModelOnly" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4"></div>
+        
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+                <p>@Model.ErrorMessage</p>
+            </div>
+        }
+
+        <div class="space-y-6">
+            <partial name="_RoomFormPartial" model="Model.RoomData" />
+        </div>
+
+        <button type="submit" class="mt-6 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 font-semibold transition duration-150 shadow-md">
+            Create room
+        </button>
+    </form>
+</div>

@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Booking APP</title>
+    
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="min-h-screen">
+    
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8" 
+        x-data="{ open: false }">
+            <div class="flex items-center justify-between h-16">
+                <a asp-page="/Index" 
+                class="text-2xl font-bold text-pink-600 tracking-wider">
+                    HOTEL BOOKING
+                </a>
+
+                <div class="hidden md:flex space-x-6 items-center text-xl">
+                    <a asp-page="/Hotels/Index" 
+                    class="text-gray-700 font-medium">Search</a>
+            
+                     @if (User.Identity?.IsAuthenticated == true)
+                    {
+                     <a asp-page="/Bookings/Index" 
+                     class="text-gray-700 font-medium">Bookings History</a>
+                      @if (User.IsInRole("Admin"))
+                       {
+                        <a asp-page="/Admin/Hotels/Index" 
+                        class="text-gray-700 font-medium">
+                            Hotels
+                        </a>
+                        <a asp-page="/Admin/Bookings/Index" 
+                        class="text-gray-700 font-medium">
+                            Bookings
+                        </a>
+                        <a asp-page="/Admin/Users/Index" 
+                        class="text-gray-700 font-medium">
+                            Users
+                        </a>
+                        <a asp-page="/Admin/Bookings/Stats" 
+                        class="text-gray-700 font-medium">
+                            Stats
+                        </a>
+                        }
+        
+            <span class="text-gray-700 font-bold uppercase tracking-wider leading-none">
+        
+                @User.Identity.Name
+                @if(User.IsInRole("Admin"))
+               {
+                <div class="text-pink-600 text-xs font-semibold uppercase tracking-wider leading-none">
+                    Admin
+                </div>
+               } 
+            </span>
+                
+    
+             <form method="post" 
+                        asp-page="/Account/Logout" class="inline">
+                            <button type="submit"
+                                class="bg-red-500 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-150">
+                                Logout
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-page="/Account/Login" 
+                        class="text-gray-700 px-3 py-2 rounded-md text-sm font-medium">
+                            Login
+                        </a>
+                        <a asp-page="/Account/Register" 
+                        class="bg-pink-600  text-white px-4 py-2 rounded-md text-sm font-medium ml-2">
+                            Register
+                        </a>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="w-full h-full pb-3">
+        @RenderBody()
+    </main>
+    </body>
+</html>

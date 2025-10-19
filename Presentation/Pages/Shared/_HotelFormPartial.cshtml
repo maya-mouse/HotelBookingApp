@@ -1,0 +1,29 @@
+@model Application.DTOs.CreateHotelDto
+
+<div class="bg-white p-6 rounded-xl shadow-lg border border-pink-100">
+    <h2 class="text-3xl font-semibold text-pink-600 mb-4">Main Characteristics</h2>
+
+    <div class="mb-4">
+        <label asp-for="Name" class="block text-xl font-medium text-gray-700">Name</label>
+        <input asp-for="Name" type="text" class="mt-1 block w-full border border-pink-300 rounded-md shadow-sm p-3">
+        <span asp-validation-for="Name" class="text-red-500 text-sm mt-1"></span>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="City" class="block text-xl font-medium text-gray-700">City</label>
+        <input asp-for="City" type="text" class="mt-1 block w-full border border-pink-300 rounded-md shadow-sm p-3">
+        <span asp-validation-for="City" class="text-red-500 text-sm mt-1"></span>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="Address" class="block text-xl font-medium text-gray-700">Address</label>
+        <input asp-for="Address" type="text" class="mt-1 block w-full border border-pink-300 rounded-md shadow-sm p-3">
+        <span asp-validation-for="Address" class="text-red-500 text-sm mt-1"></span>
+    </div>
+
+    <div>
+        <label asp-for="Description" class="block text-xl font-medium text-gray-700">Description</label>
+        <textarea asp-for="Description" rows="4" class="mt-1 block w-full border border-pink-300 rounded-md shadow-sm p-3"></textarea>
+        <span asp-validation-for="Description" class="text-red-500 text-sm mt-1"></span>
+    </div>
+</div>

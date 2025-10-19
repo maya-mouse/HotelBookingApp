@@ -1,0 +1,108 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Пошук готелів та номерів";
+}
+
+<div class="container mx-auto p-4 sm:p-6 lg:p-8 min-h-screen">
+  <h1 class="text-3xl font-bold text-pink-600 mb-8">Search you hotel :</h1>
+    <div class="bg-white shadow-xl rounded-xl p-6 mb-10 border border-pink-300">
+        <form method="get" class="grid grid-cols-1 md:grid-cols-5 gap-5 items-end">
+            <div>
+                <label for="city" 
+                class="block text-ml font-medium text-gray-700">City</label>
+                <input type="text" id="city" asp-for="SearchCriteria.City"
+                class="mt-1 block w-full rounded-md border-pink-300 shadow-sm p-3 border"
+                placeholder="Kyiv">
+            </div>
+
+            <div>
+                <label for="checkIn" 
+                class="block text-ml font-medium text-gray-700">Check In Date</label>
+                <input type="date" id="checkIn" asp-for="SearchCriteria.CheckInDate"
+                class="mt-1 block w-full rounded-md border-pink-300 shadow-sm p-3 border">
+            </div>
+
+            <div>
+                <label for="checkOut" 
+                class="block text-ml font-medium text-gray-700">Check Out Date</label>
+                <input type="date" id="checkOut" asp-for="SearchCriteria.CheckOutDate"
+                class="mt-1 block w-full rounded-md border-pink-300 shadow-sm p-3 border">
+            </div>
+            <div>
+               <label asp-for="SearchCriteria.Capacity" 
+               class="block text-ml font-medium text-gray-700">Capacity</label>
+               <input asp-for="SearchCriteria.Capacity" 
+               type="number" min="1" class="mt-1 block w-full border border-pink-300 rounded-md shadow-sm p-3 ">
+            </div>
+
+
+            <div>
+                <button type="submit" 
+                class="w-full bg-pink-600 text-white py-3 px-4 rounded-md font-semibold">
+                    Search
+                </button>
+            </div>
+        </form>
+        
+        <div asp-validation-summary="ModelOnly" 
+        class="mt-4 text-red-600 font-medium"></div>
+       </div>
+       @if (Model.IsSearched)
+       {
+        @if (Model.AvailableRooms != null && Model.AvailableRooms.Any())
+        {
+            <h2 
+            class="text-2xl font-semibold text-gray-800 mb-6">@Model.AvailableRooms.Count() available rooms found :</h2>
+            
+            <div class="space-y-6">
+                @foreach (var room in Model.AvailableRooms)
+                {
+                    <div x-data="{ bookingOpen: false }" 
+                    class="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row border border-pink-200">
+                        
+                        <div class="p-6 flex-grow">
+                            <p 
+                            class="text-ml font-bold text-pink-600 uppercase tracking-wider mb-1">@room.Name</p>
+                            <h3 class="text-xl font-bold text-gray-600 mb-2">Room @room.RoomNumber for @room.Capacity person</h3>
+                            
+                            <div class="text-gray-600 text-ml space-y-1 mt-3">
+                                <p><strong>Capacity :</strong> @room.Capacity</p>
+                                <p><strong>Address :</strong> @room.Address</p>
+                                <p><strong>Description :</strong> @room.Description</p>
+                            </div>
+                        </div>
+
+                        <div 
+                        class="flex-shrink-0 bg-pink-50 p-6 md:w-56 flex flex-col items-center justify-center">
+    
+                    <div>
+                     <p class="text-l text-gray-500 text-right md:text-left">
+                        Price per night :</p>
+                     <p class="text-3xl font-bold text-pink-600 text-right md:text-left">
+                        @room.PricePerNight.ToString("C")</p>
+                    <p class="text-ml text-gray-500 mt-1 text-right md:text-left">
+                        Total price @room.TotalPrice.ToString("C")</p>
+                    </div>
+
+            <a asp-page="/Hotels/Details" 
+            asp-route-roomId="@room.RoomId.ToString()" 
+            asp-route-checkIn="@Model.SearchCriteria.CheckInDate.ToString("yyyy-MM-dd")"
+            asp-route-checkOut="@Model.SearchCriteria.CheckOutDate.ToString("yyyy-MM-dd")"
+            class="w-full mt-4 bg-pink-600 text-white py-2 text-center rounded-md font-semibold hover:bg-pink-700 transition duration-150">
+            View details
+            </a>
+            </div>
+        </div>
+        }
+        </div>
+        }
+        else
+        {
+            <div class="text-center p-10 bg-white rounded-lg shadow-inner border border-gray-100">
+                <p class="text-2xl text-gray-500 font-medium">😢 We're sorry, no rooms were found according to your criteria</p>
+                <p class="text-gray-500 mt-2">Try changing the dates or city</p>
+            </div>
+        }
+    }
+</div>
