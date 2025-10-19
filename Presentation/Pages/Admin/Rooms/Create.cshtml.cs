@@ -25,10 +25,6 @@ namespace Presentation.Pages.Admin.Rooms
 
         public async Task<IActionResult> OnGetAsync(int hotelId)
         {
-            if (hotelId <= 0)
-            {
-                return RedirectToPage("/Admin/Hotels/Index");
-            }
 
             HotelId = hotelId;
             var hotel = await _hotelService.GetHotelByIdAsync(hotelId);

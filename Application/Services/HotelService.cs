@@ -91,6 +91,11 @@ namespace Application.Services
             return results;
         }
 
+        public async Task<IEnumerable<string>> GetAvailableCitiesAsync()
+        {
+            return await _hotelRepository.GetAvailableCitiesAsync();
+        }
+
 
     }
 

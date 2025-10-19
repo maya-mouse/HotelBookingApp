@@ -16,7 +16,17 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("Default");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseMySql(connectionString, ServerVersion.Parse("8.0.32"),
+    mysqlOptions => 
+        {
+            // !!! ФІКС: ДОДАЄМО EnableRetryOnFailure !!!
+            mysqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 15, 
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null
+            );
+        });
+
 });
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -70,6 +80,7 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<AppDbContext>();
         var userManager = services.GetRequiredService<UserManager<User>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        
 
         await DbInializer.InitializeAsync(context, userManager, roleManager);
     }
@@ -89,4 +100,5 @@ app.Use(async (context, next) =>
     }
     await next();
 });
+
 app.Run();

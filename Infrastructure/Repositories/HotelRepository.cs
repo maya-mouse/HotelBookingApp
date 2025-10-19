@@ -62,7 +62,7 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Room>> FindAvailableRoomsAsync(string city, DateTime checkIn, DateTime checkOut, int? capacity = 1)
         {
-           
+
             var query = _context.Rooms
                 .Include(r => r.Hotel)
                 .Include(r => r.Bookings)
@@ -77,6 +77,16 @@ namespace Infrastructure.Repositories
                 .ToListAsync();
 
             return availableRooms;
+        }
+
+        public async Task<IEnumerable<string>> GetAvailableCitiesAsync()
+        {
+
+            return await _context.Hotels
+                .Select(h => h.City)
+                .Distinct()
+                .OrderBy(city => city)
+                .ToListAsync();
         }
     }
 

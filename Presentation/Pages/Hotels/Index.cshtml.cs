@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Application.Interfaces;
 using Application.DTOs;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Presentation.Pages.Hotels
 {
@@ -11,7 +12,7 @@ namespace Presentation.Pages.Hotels
 
         [BindProperty(SupportsGet = true)]
         public SearchDto SearchCriteria { get; set; } = null!;
-      
+        public SelectList CityOptions { get; set; } = null!;      
 
     
         public IEnumerable<RoomSearchDto> AvailableRooms { get; set; } = new List<RoomSearchDto>();
@@ -22,7 +23,8 @@ namespace Presentation.Pages.Hotels
         public async Task OnGetAsync()
         {
             
-            if (!string.IsNullOrEmpty(SearchCriteria.City) || SearchCriteria.CheckInDate != DateTime.Today.AddDays(1))
+            
+            if (SearchCriteria.CheckInDate != DateTime.Today.AddDays(1))
             {
 
                 if (SearchCriteria.CheckOutDate <= SearchCriteria.CheckInDate)
@@ -32,6 +34,8 @@ namespace Presentation.Pages.Hotels
                 }
                 else
                 {
+                    var cities = await _hotelService.GetAvailableCitiesAsync();
+                    CityOptions = new SelectList(cities, SearchCriteria.City);
                     AvailableRooms = await _hotelService.SearchRoomsAsync(SearchCriteria);
                 }
                 IsSearched = true;

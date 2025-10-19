@@ -10,5 +10,6 @@ namespace Application.Interfaces
         Task DeleteHotelAsync(int id);
         Task<IEnumerable<HotelDto>> GetHotelsByCityAsync(string city);
         Task<IEnumerable<RoomSearchDto>> SearchRoomsAsync(SearchDto criteria);
+        Task<IEnumerable<string>> GetAvailableCitiesAsync();
     }
 }

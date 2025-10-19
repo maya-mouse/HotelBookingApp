@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Application.DTOs;
 using Application.Interfaces;
+using System.Security.Claims;
 
 namespace Presentation.Pages.Admin.Bookings
 {
@@ -27,6 +28,20 @@ namespace Presentation.Pages.Admin.Bookings
             {
                 ErrorMessage = $"Error loading all reservations : {ex.Message}";
             }
+        }
+
+         public async Task<IActionResult> OnPostAsync(int bookingId, string userId)
+        {
+            try
+            {
+                await _bookingService.CancelBookingAsync(bookingId, userId);
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = $"Error cancelling reservation : {ex.Message}";
+            }
+
+            return RedirectToPage();
         }
 
 

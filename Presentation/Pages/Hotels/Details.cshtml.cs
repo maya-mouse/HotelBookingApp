@@ -59,11 +59,7 @@ namespace Presentation.Pages.Hotels
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!User.Identity!.IsAuthenticated)
-            {
-                return RedirectToPage("/Account/Login", new { ReturnUrl = Request.Path + Request.QueryString });
-            }
-            
+    
             if (!ModelState.IsValid)
             {
                 await OnGetAsync(RoomId, CheckInDate, CheckOutDate);

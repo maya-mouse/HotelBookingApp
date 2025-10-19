@@ -17,6 +17,7 @@
                     <th class="px-6 py-3 text-left text-xl font-medium text-gray-600 uppercase tracking-wider">Period</th>
                     <th class="px-6 py-3 text-left text-xl font-medium text-gray-600 uppercase tracking-wider">Price / Status</th>
                     <th class="px-6 py-3 text-left text-xl font-medium text-gray-600 uppercase tracking-wider">User (ID)</th>
+                    <th class="px-6 py-3 text-left text-xl font-medium text-gray-600 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -36,6 +37,23 @@
                                 <span class="text-xs text-@(booking.Status == Domain.BookingStatus.Active ? "green" : "gray")-500">@booking.Status</span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-xl text-gray-700">@booking.UserId</td>
+                            <td> @if (booking.Status == Domain.BookingStatus.Active)
+                            {
+                      
+                            <form method="post" onsubmit="return confirm('Are you sure you want to cancel your reservation?');">
+                            <input type="hidden" name="bookingId" value="@booking.Id" />
+                            <input type="hidden" name="userId" value="@booking.UserId" />
+
+                            <button type="submit" class="bg-red-500 font-semibold text-white py-2 px-4 rounded-lg text-sm">
+                               Cancel booking
+                            </button>
+                            </form>
+                       
+                    }
+                    else{
+                        <div class="px-6 py-4 whitespace-nowrap text-l text-gray-700">No actions</div>
+                    }
+                    </td>
                         </tr>
                     }
                 }
@@ -47,5 +65,5 @@
                 }
             </tbody>
         </table>
-    </div>
+    </div> 
 </div>

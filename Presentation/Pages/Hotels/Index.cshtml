@@ -9,12 +9,14 @@
     <div class="bg-white shadow-xl rounded-xl p-6 mb-10 border border-pink-300">
         <form method="get" class="grid grid-cols-1 md:grid-cols-5 gap-5 items-end">
             <div>
-                <label for="city" 
-                class="block text-ml font-medium text-gray-700">City</label>
-                <input type="text" id="city" asp-for="SearchCriteria.City"
-                class="mt-1 block w-full rounded-md border-pink-300 shadow-sm p-3 border"
-                placeholder="Kyiv">
-            </div>
+        <label asp-for="SearchCriteria.City" 
+               class="block text-ml font-medium text-gray-700">City</label>
+        <select asp-for="SearchCriteria.City"
+                asp-items="Model.CityOptions"
+                id="city"
+                class="mt-1 block w-full rounded-md border-pink-300 shadow-sm p-3 border">
+            </select>
+        </div>
 
             <div>
                 <label for="checkIn" 

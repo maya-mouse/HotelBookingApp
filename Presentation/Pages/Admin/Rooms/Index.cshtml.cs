@@ -27,12 +27,7 @@ namespace Presentation.Pages.Admin.Rooms
         
         public async Task<IActionResult> OnGetAsync(int hotelId)
         {
-            if (hotelId <= 0)
-            {
-                ErrorMessage = "Invalid hotel ID";
-                return RedirectToPage("/Admin/Hotels/Index");
-            }
-
+           
             HotelId = hotelId;
             try
             {

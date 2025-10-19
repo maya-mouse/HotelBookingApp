@@ -46,14 +46,9 @@ namespace Presentation.Pages.Bookings
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (string.IsNullOrEmpty(userId))
-            {
-                return RedirectToPage("/Account/Login");
-            }
-
             try
             {
-                await _bookingService.CancelBookingAsync(bookingId, userId);
+                await _bookingService.CancelBookingAsync(bookingId, userId!);
             }
             catch (Exception ex)
             {
