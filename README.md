@@ -39,19 +39,22 @@ When the database is initialized (`DbInitializer`), two default users are create
 
 ##  Launch Guide
 
-###  Run Tailwind (CSS watcher)
+
 ```bash
 cd Presentation
 npm install
 npm run watch:css
+```
 
-{
+In Presentation/appsettings.json : 
+```bash
   "ConnectionStrings": {
     "Default": "Server=localhost;Port=3306;Database=hotel_booking;User=appuser;Password=app_password;"
   }
-}
+```
 Replace appuser/app_password with your local MySQL credentials
 
+```bash
 cd Infrastructure 
 dotnet ef database update --startup-project ..\Presentation\Presentation.csproj
 
